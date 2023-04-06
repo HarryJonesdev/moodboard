@@ -1,0 +1,24 @@
+{% extends "moodboard/base.html" %}
+{% block content %}
+   
+   
+    <article class="media content-section shadow-lg p-3 mb-5 bg-white rounded ">
+        <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ object.author }}</a>
+            <small class="text-muted">{{ object.published_date }}</small>
+        </div>
+        <!--If the current logged in user matches show edit and delete buttons-->
+        {% if object.author == user %}
+            <a href ="{% url 'post-update' object.id %}">Edit</a>
+            <a href ="{% url 'post-delete' object.id %}">Delete</a>
+
+
+        {% endif %}
+
+        <h2 class="article-title">{{ object.title }}</h2>
+        <p class="article-content">{{ object.text }}</p>
+        </div>
+    </article>
+    
+{% endblock content %}
