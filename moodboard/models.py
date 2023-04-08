@@ -14,6 +14,7 @@ class Post(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(default=timezone.now)
+    sentiment = models.CharField(max_length=10, blank=True, null=True)
  
     def publish(self):
         self.published_date = timezone.now()
