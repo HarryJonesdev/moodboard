@@ -1,0 +1,44 @@
+{% extends "moodboard/base.html" %}
+{% load static %}
+{% block content %}
+
+<h2>{{ average_sentiment_title }}: {{ average_sentiment }}</h2>
+
+
+   {% for post in posts %}
+    <article class="media content-section shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ post.author }}</a>
+            <small class="text-muted">{{ post.published_date }}</small>
+        </div>
+        <!--If the current logged-in user matches, show edit and delete buttons-->
+        {% if post.author == user %}
+            <a href="{% url 'post-update' post.pk %}">Edit</a>
+            <a href="{% url 'post-delete' post.pk %}">Delete</a>
+        {% endif %}
+
+        <h2 class="article-title">{{ post.title }}</h2>
+        <p class="article-content">{{ post.text }}</p>
+        <p class="article-sentiment">Sentiment: {{ post.sentiment }}</p>
+
+        {% if post.sentiment == 'Positive' %}
+          <div style="position: relative;">
+              <img src="{% static 'moodboard/pictures/happyface.png' %}" style="position: absolute; bottom: 0; right: 10px; width: 50px; height: 50px;">
+          </div>
+        {% elif post.sentiment == 'Negative' %}
+          <div style="position: relative;">
+              <img src="{% static 'moodboard/pictures/sadface.png' %}" style="position: absolute; bottom: 0; right: 10px; width: 50px; height: 50px;">
+          </div>
+        {% endif %}
+        
+        </div>
+        
+    </article>
+   {% empty %}
+    <p>No posts found.</p>
+   {% endfor %}
+
+   
+
+{% endblock content %}

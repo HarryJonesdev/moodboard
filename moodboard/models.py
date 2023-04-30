@@ -7,7 +7,7 @@ from django.urls import reverse
 
 
 
-
+# Post model
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -26,6 +26,28 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk':self.pk})
     
+
+# Comment Model
+class Comment(models.Model):
+    # Foreign key to post
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    published_date = models.DateTimeField(default=timezone.now)
+    sentiment = models.CharField(max_length=10, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.author}\'s comment on {self.post}'
+
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk':self.post.pk})
     
+    
+
+
+
+
+
 
 

@@ -2,6 +2,14 @@
 {% load static %}
 {% block content %}
 
+<form action="{% url 'search_posts' %}" method="get">
+    
+    <input type="text" class="form-control" name="q" value="" placeholder="Search for post...">
+   
+</form>
+<br>
+</br>
+
   <div class="mb-3 input-group border border-4 rounded">
         <a href="{% url 'post-create' %}" class="input-group">
             <div class="input-group-prepend">
