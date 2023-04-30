@@ -22,18 +22,69 @@
         <p class="article-sentiment">Sentiment: {{ object.sentiment }}</p>
 
         {% if object.sentiment == 'Positive' %}
-            <div style="position: relative;">
-                <img src="{% static 'moodboard/pictures/happyface.png' %}" style="position: absolute; bottom: 0; right: 0; width: 50px; height: 50px;">
-            </div>
+          <div style="position: relative;">
+              <img src="{% static 'moodboard/pictures/happyface.png' %}" style="position: absolute; bottom: 0; right: 10px; width: 50px; height: 50px;">
+          </div>
         {% elif object.sentiment == 'Negative' %}
-            <div style="position: relative;">
-                <img src="{% static 'moodboard/pictures/sadface.png' %}" style="position: absolute; bottom: 0; right: 0; width: 50px; height: 50px;">
-            </div>
+          <div style="position: relative;">
+              <img src="{% static 'moodboard/pictures/sadface.png' %}" style="position: absolute; bottom: 0; right: 10px; width: 50px; height: 50px;">
+          </div>
         {% endif %}
+
+
+        
  
         
         
         </div>
+
+
+        
     </article>
+
+
+    <h2>Comments</h2>
+
+    <h2>{{ average_sentiment }}</h2>
+  
+
+    <form method="post" action="{% url 'post-comment' pk=post.pk %}">
+      {% csrf_token %}
+      <div>
+        <label for="id_text">Comment:</label>
+        <textarea id="id_text" name="text"></textarea>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+
+
+      {% for comment in object.comments.all %}
+        <br>
+        <p>
+          {{ comment.author }}
+          {{ comment.published_date }}
+          {{ comment.text }}
+          {% if comment.sentiment == 'Positive' %}
+            <div style="position: relative;">
+                <img src="{% static 'moodboard/pictures/happyface.png' %}" style="position: absolute; bottom: 0; right: 20px; width: 50px; height: 50px;">
+            </div>
+        {% elif comment.sentiment == 'Negative' %}
+            <div style="position: relative;">
+                <img src="{% static 'moodboard/pictures/sadface.png' %}" style="position: absolute; bottom: 0; right: 20px; width: 50px; height: 50px;">
+            </div>
+        {% endif %}
+        </p>
+      {% endfor %}
+   
+
+
+
+
+
+    
+    
+
+</div>
+    
     
 {% endblock content %}
